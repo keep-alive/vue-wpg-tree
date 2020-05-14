@@ -6,6 +6,13 @@
     "license": "MIT",
     "private": false,
     "main": "dist/VueWpgTree.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/keep-alive/vue-wpg-tree.git"
+    },
+    "bugs": {
+        "url": "https://github.com/keep-alive/vue-wpg-tree/issues"
+    },
     "scripts": {
         "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
         "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
