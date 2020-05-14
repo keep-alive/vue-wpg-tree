@@ -1,0 +1,10 @@
+.*
+*.md
+node_modules/
+src/
+webpack.config.js
+.gitignore
+index.html
+.editorconfig
+.babelrc
+.package-lock.json
