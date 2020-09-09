@@ -11,7 +11,8 @@
             :level="level"
             :render-content="renderContent"
             :render-node-content="renderNodeContent"
-            @SOURCECREATOR="sourceCreator"
+            @sourceCreator="sourceCreator"
+            @nodeDrop="nodeDrop"
         />
     </div>
 </template>
@@ -127,13 +128,15 @@ export default {
         renderContent:Function,
         renderNodeContent:Function,
     },
+    data(){
+        return {
+            inited : true
+        }
+    },
     computed: {
         _dropkeys(){
-            let {source,dropkeys,expandall} = this; 
-            if(dropkeys.length > 0){
-                return dropkeys;
-            }
-            if(expandall){
+            let {source,dropkeys,expandall,inited} = this;
+            if(expandall && inited){
                 return getDropKeys(source)
             }else{
                 return dropkeys;
@@ -157,6 +160,9 @@ export default {
                 source:treeData,
                 checkList
             })
+        },
+        nodeDrop(){
+            this.inited = false;
         }
     }
 }

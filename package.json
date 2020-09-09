@@ -1,7 +1,7 @@
 {
     "name": "vue-wpg-tree",
     "description": "Vue component with tree",
-    "version": "1.0.0",
+    "version": "1.2.1",
     "author": "zhangtianwen <943407452@qq.com>",
     "license": "MIT",
     "private": false,

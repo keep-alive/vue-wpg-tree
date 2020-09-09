@@ -17,10 +17,9 @@
                             class="ant-checkbox" 
                             :class="{'ant-checkbox-checked': item.checked,'ant-checkbox-indeterminate' : item.halfChecked}"
                         >
-                            <input type="checkbox" class="ant-checkbox-input" @change="handleCheck($event,item)">
+                            <input type="checkbox" v-model="item.checked" class="ant-checkbox-input" @change="handleCheck($event,item)">
                             <span class="ant-checkbox-inner"></span>
                         </span>
-                        <!-- <a-checkbox :indeterminate="item.halfChecked" :checked="item.checked" @change="handleCheck($event,item)"></a-checkbox> -->
                     </div>
                     <div class="itemname wfc2" @click="select(item)">
                         <node-content :node="item"/>
@@ -39,7 +38,8 @@
                     :deafultPdl="deafultPdl" 
                     :render-content="renderContent" 
                     :render-node-content="renderNodeContent"
-                    @SOURCECREATOR = "sourceCreator"
+                    @sourceCreator = "sourceCreator"
+                    @nodeDrop ="nodeDrop"
                 ></tree-node>
             </template>
             <template v-else>
@@ -55,14 +55,9 @@
                             class="ant-checkbox" 
                             :class="{'ant-checkbox-checked': item.checked,'ant-checkbox-indeterminate' : item.halfChecked}"
                         >
-                            <input type="checkbox" class="ant-checkbox-input" @change="handleCheck($event,item)">
+                            <input type="checkbox" v-model="item.checked" class="ant-checkbox-input" @change="handleCheck($event,item)">
                             <span class="ant-checkbox-inner"></span>
                         </span>
-                        <!-- <a-checkbox 
-                            :indeterminate="item.halfChecked"  
-                            :checked="item.checked" 
-                            @change="handleCheck($event,item)">
-                        </a-checkbox> -->
                     </div>
                     <div 
                         class="itemname wfc2"
@@ -82,7 +77,7 @@ function diff(arr1,arr2){
 }
 export default {
     name:'TreeNode',
-    props:['source','dropkeys','selectedkeys','checkable','checkedkeys','paddingl','deafultPdl','level','renderContent','renderNodeContent'],
+    props:['source','dropkeys','selectedkeys','checkable','checkedkeys','paddingl','expandall','deafultPdl','level','renderContent','renderNodeContent'],
     components:{
         ExtraContent:{
             props:{
@@ -161,6 +156,7 @@ export default {
             dropkeys.filter(id => {
                 return id !== key
             }) : [...dropkeys,key];
+            this.$emit('nodeDrop');
             this.dispatch('VueWpgTree','menudrop',[_dropkeys]);
         },
         select(item){
@@ -200,7 +196,7 @@ export default {
             if(children){
                 children = setProp(children);
             }
-            this.$emit('SOURCECREATOR',{
+            this.$emit('sourceCreator',{
                 ...item,
                 checked,
                 halfChecked:false,
@@ -220,12 +216,15 @@ export default {
             })
             let checked = children.every(({checked}) => checked === true);
             let halfChecked = children.some(({checked}) => checked === true) && checked === false || childHalfChecked === true;
-            this.$emit('SOURCECREATOR',{
+            this.$emit('sourceCreator',{
                 ...parent,
                 children,
                 checked,
                 halfChecked
             })
+        },
+        nodeDrop(){
+            this.$emit('nodeDrop');
         },
         /**
          * @description: 设置每个节点的缩进
@@ -356,8 +355,8 @@ li{
                     top: 50%;
                     left: 22%;
                     display: table;
-                    width: 5.71428571px;
-                    height: 9.14285714px;
+                    width: 5px;
+                    height: 7.2px;
                     border: 2px solid #fff;
                     border-top: 0;
                     border-left: 0;

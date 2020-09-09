@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Author: zhangtianwen
- * @LastEditTime: 2020-05-14 15:01:36
+ * @LastEditTime: 2020-06-16 17:35:05
  -->
 <template>
   <div id="app">
@@ -65,7 +65,7 @@ export default {
             }
         },
         menudrop(v){
-            this.dropkeys = [...v]
+            this.dropkeys = [...v];
         },
         nodeCheck({source,checkList}){
             this.checkedkeys = [...checkList]
